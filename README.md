@@ -6,7 +6,6 @@ Enrich Contacts and Companies with brand, firmographic and logo data via the [Lo
 
 **Current version: 1.0.0**
 
-**Namespace:** `MauticPlugin\MauticLogokitBundle`  
 **Install directory:** `plugins/MauticLogokitBundle/`
 
 ---
