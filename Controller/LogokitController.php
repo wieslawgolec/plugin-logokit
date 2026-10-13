@@ -2,14 +2,12 @@
 
 declare(strict_types=1);
 
-namespace MauticPlugin\LogokitBundle\Controller;
+namespace MauticPlugin\MauticLogokitBundle\Controller;
 
-use MauticPlugin\LogokitBundle\Helper\LookupHelper;
+use MauticPlugin\MauticLogokitBundle\Helper\LookupHelper;
 
 /**
  * Handles single and batch lookup actions from the Mautic UI.
- * Designed so core enrichment logic is unit-testable via LookupHelper
- * without requiring a full Symfony/Mautic kernel.
  */
 class LogokitController
 {
@@ -19,10 +17,7 @@ class LogokitController
     }
 
     /**
-     * Dispatch by objectAction name (lookup | batchLookup).
-     *
      * @param array<string, mixed> $requestData
-     *
      * @return array{success: bool, message: string, data?: array<string, mixed>}
      */
     public function executeAction(string $objectAction, int $objectId = 0, array $requestData = []): array
@@ -36,7 +31,6 @@ class LogokitController
 
     /**
      * @param array<string, mixed> $requestData
-     *
      * @return array{success: bool, message: string, data?: array<string, mixed>}
      */
     public function lookup(int $objectId, array $requestData = []): array
@@ -65,8 +59,7 @@ class LogokitController
     }
 
     /**
-     * @param array<string, mixed> $requestData expects ids (list) and optional notify
-     *
+     * @param array<string, mixed> $requestData
      * @return array{success: bool, message: string, processed: int, results: list<array<string, mixed>>}
      */
     public function batchLookup(array $requestData = []): array
