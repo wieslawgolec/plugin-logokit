@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MauticPlugin\LogokitBundle\Services;
+namespace MauticPlugin\MauticLogokitBundle\Services;
 
 /**
  * Imports / maps existing Clearbit enrichment payloads into LogoKit-compatible
@@ -10,11 +10,7 @@ namespace MauticPlugin\LogokitBundle\Services;
  */
 class ClearbitImporter
 {
-    /**
-     * Known Clearbit → internal field map for companies.
-     *
-     * @var array<string, string>
-     */
+    /** @var array<string, string> */
     private const COMPANY_FIELD_MAP = [
         'name'              => 'name',
         'legalName'         => 'legalName',
@@ -36,11 +32,7 @@ class ClearbitImporter
         'linkedin.handle'   => 'linkedin',
     ];
 
-    /**
-     * Known Clearbit → internal field map for persons / contacts.
-     *
-     * @var array<string, string>
-     */
+    /** @var array<string, string> */
     private const PERSON_FIELD_MAP = [
         'name.givenName'    => 'firstname',
         'name.familyName'   => 'lastname',
@@ -57,29 +49,18 @@ class ClearbitImporter
         'linkedin.handle'   => 'linkedin',
     ];
 
-    /**
-     * @param array<string, mixed> $clearbitPayload
-     *
-     * @return array<string, mixed>
-     */
+    /** @param array<string, mixed> $clearbitPayload @return array<string, mixed> */
     public function importCompany(array $clearbitPayload): array
     {
         return $this->mapNested($clearbitPayload, self::COMPANY_FIELD_MAP);
     }
 
-    /**
-     * @param array<string, mixed> $clearbitPayload
-     *
-     * @return array<string, mixed>
-     */
+    /** @param array<string, mixed> $clearbitPayload @return array<string, mixed> */
     public function importPerson(array $clearbitPayload): array
     {
         return $this->mapNested($clearbitPayload, self::PERSON_FIELD_MAP);
     }
 
-    /**
-     * Detect whether a payload looks like a Clearbit company or person response.
-     */
     public function detectType(array $payload): string
     {
         if (isset($payload['person']) || isset($payload['name']['givenName']) || isset($payload['email'])) {
@@ -92,12 +73,7 @@ class ClearbitImporter
         return 'unknown';
     }
 
-    /**
-     * @param array<string, mixed> $source
-     * @param array<string, string> $map
-     *
-     * @return array<string, mixed>
-     */
+    /** @param array<string, mixed> $source @param array<string, string> $map @return array<string, mixed> */
     private function mapNested(array $source, array $map): array
     {
         $result = [];
@@ -109,15 +85,12 @@ class ClearbitImporter
             }
         }
 
-        // Preserve original under _clearbit for audit / re-import
         $result['_clearbit'] = $source;
 
         return $result;
     }
 
-    /**
-     * @param array<string, mixed> $data
-     */
+    /** @param array<string, mixed> $data */
     private function getByPath(array $data, string $path): mixed
     {
         $segments = explode('.', $path);
@@ -133,9 +106,7 @@ class ClearbitImporter
         return $current;
     }
 
-    /**
-     * @param array<string, mixed> $data
-     */
+    /** @param array<string, mixed> $data */
     private function setByPath(array &$data, string $path, mixed $value): void
     {
         $segments = explode('.', $path);

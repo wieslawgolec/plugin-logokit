@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MauticPlugin\LogokitBundle\Services;
+namespace MauticPlugin\MauticLogokitBundle\Services;
 
 /**
  * HTTP client for LogoKit Brand API and Logo CDN.
@@ -41,8 +41,6 @@ class LogokitClient
     }
 
     /**
-     * Fetch brand / company enrichment data by domain or ticker.
-     *
      * @return array<string, mixed>|null
      */
     public function getBrand(string $identifier): ?array
@@ -65,9 +63,6 @@ class LogokitClient
         return $response;
     }
 
-    /**
-     * Build a Logo CDN URL for a domain (hotlink-friendly).
-     */
     public function getLogoUrl(string $domain, int $size = 128, string $format = 'png'): string
     {
         $domain = $this->sanitizeIdentifier($domain);
@@ -85,11 +80,7 @@ class LogokitClient
     }
 
     /**
-     * Map LogoKit brand response to a normalized enrichment payload
-     * compatible with former Clearbit field names where possible.
-     *
      * @param array<string, mixed> $brand
-     *
      * @return array<string, mixed>
      */
     public function mapBrandToEnrichment(array $brand): array
@@ -98,44 +89,41 @@ class LogokitClient
         $social  = is_array($brand['social_media'] ?? null) ? $brand['social_media'] : [];
 
         return [
-            'name'               => $brand['name'] ?? $brand['long_name'] ?? null,
-            'legalName'          => $brand['long_name'] ?? null,
-            'domain'             => $brand['domain'] ?? null,
-            'website'            => $brand['website'] ?? null,
-            'description'        => $brand['short_description'] ?? $brand['long_description'] ?? null,
-            'longDescription'    => $brand['long_description'] ?? null,
-            'logo'               => $brand['logo'] ?? null,
-            'foundedYear'        => $brand['founded_year'] ?? null,
-            'employees'          => $brand['number_of_employees'] ?? null,
-            'industry'           => $brand['gics_industry'] ?? $brand['gics_sector'] ?? null,
-            'sector'             => $brand['gics_sector'] ?? null,
-            'industryGroup'      => $brand['gics_industry_group'] ?? null,
-            'subIndustry'        => $brand['gics_sub_industry'] ?? null,
-            'location'           => [
-                'streetAddress'  => trim(($address['address1'] ?? '') . ' ' . ($address['address2'] ?? '')),
-                'city'           => $address['city'] ?? null,
-                'state'          => $address['state'] ?? null,
-                'postalCode'     => $address['zip'] ?? null,
-                'country'        => $address['country'] ?? null,
+            'name'            => $brand['name'] ?? $brand['long_name'] ?? null,
+            'legalName'       => $brand['long_name'] ?? null,
+            'domain'          => $brand['domain'] ?? null,
+            'website'         => $brand['website'] ?? null,
+            'description'     => $brand['short_description'] ?? $brand['long_description'] ?? null,
+            'longDescription' => $brand['long_description'] ?? null,
+            'logo'            => $brand['logo'] ?? null,
+            'foundedYear'     => $brand['founded_year'] ?? null,
+            'employees'       => $brand['number_of_employees'] ?? null,
+            'industry'        => $brand['gics_industry'] ?? $brand['gics_sector'] ?? null,
+            'sector'          => $brand['gics_sector'] ?? null,
+            'industryGroup'   => $brand['gics_industry_group'] ?? null,
+            'subIndustry'     => $brand['gics_sub_industry'] ?? null,
+            'location'        => [
+                'streetAddress' => trim(($address['address1'] ?? '') . ' ' . ($address['address2'] ?? '')),
+                'city'          => $address['city'] ?? null,
+                'state'         => $address['state'] ?? null,
+                'postalCode'    => $address['zip'] ?? null,
+                'country'       => $address['country'] ?? null,
             ],
-            'geo'                => [
+            'geo' => [
                 'city'    => $address['city'] ?? null,
                 'state'   => $address['state'] ?? null,
                 'country' => $address['country'] ?? null,
             ],
-            'facebook'           => $social['facebook'] ?? null,
-            'twitter'            => $social['x'] ?? null,
-            'linkedin'           => $social['linkedin'] ?? null,
-            'instagram'          => $social['instagram'] ?? null,
-            'youtube'            => $social['youtube'] ?? null,
-            'colors'             => $brand['colors'] ?? [],
-            'raw'                => $brand,
+            'facebook'  => $social['facebook'] ?? null,
+            'twitter'   => $social['x'] ?? null,
+            'linkedin'  => $social['linkedin'] ?? null,
+            'instagram' => $social['instagram'] ?? null,
+            'youtube'   => $social['youtube'] ?? null,
+            'colors'    => $brand['colors'] ?? [],
+            'raw'       => $brand,
         ];
     }
 
-    /**
-     * Extract domain from an email address.
-     */
     public function domainFromEmail(string $email): string
     {
         $email = trim(strtolower($email));
@@ -151,7 +139,6 @@ class LogokitClient
     private function sanitizeIdentifier(string $value): string
     {
         $value = trim(strtolower($value));
-        // strip protocol / path if someone passes a full URL
         $value = preg_replace('#^https?://#i', '', $value) ?? $value;
         $value = preg_replace('#/.*$#', '', $value) ?? $value;
         $value = preg_replace('/[^a-z0-9.\-]/', '', $value) ?? $value;
@@ -161,7 +148,6 @@ class LogokitClient
 
     /**
      * @param array<int, string> $headers
-     *
      * @return array<string, mixed>|null
      */
     protected function request(string $method, string $url, array $headers = []): ?array
