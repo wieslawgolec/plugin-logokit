@@ -13,9 +13,15 @@ Enrich Contacts and Companies with brand, firmographic and logo data via the [Lo
 
 ## Why this plugin?
 
-Clearbit’s free Logo API reached end-of-life ([HubSpot announcement](https://community.hubspot.com/t/upcoming-sunset-of-clearbit-s-free-logo-api/128173)).  
-Mautic’s built-in Clearbit plugin therefore loses its data source.  
-**plugin-logokit** restores the same (and more) functionality using LogoKit.
+The original Mautic Clearbit plugin (`MauticClearbitBundle`) is being **removed in Mautic 8**. At the same time, Clearbit’s free Logo API has already reached end-of-life ([HubSpot announcement](https://community.hubspot.com/t/upcoming-sunset-of-clearbit-s-free-logo-api/128173)), so the built-in plugin loses its data source even before removal.
+
+**plugin-logokit** was created to:
+
+1. **Preserve the old Clearbit plugin functionality** for Mautic 7.2+ and beyond (contact/company lookup, batch buttons, optional auto-enrich on save, logo URLs).
+2. **Replace the dead Clearbit data source** with LogoKit Brand API + Logo CDN.
+3. **Support migration** of existing Clearbit JSON payloads via `ClearbitImporter`.
+
+If you relied on the stock Clearbit plugin, install this bundle so enrichment continues to work after Clearbit’s API sunset and after the core Clearbit plugin is dropped in Mautic 8.
 
 ---
 
