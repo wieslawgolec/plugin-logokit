@@ -20,17 +20,17 @@
         "symfony/http-kernel": "^6.4 || ^7.0"
     },
     "extra": {
-        "mautic-plugin-name": "LogokitBundle",
-        "install-directory-name": "LogokitBundle"
+        "mautic-plugin-name": "MauticLogokitBundle",
+        "install-directory-name": "MauticLogokitBundle"
     },
     "autoload": {
         "psr-4": {
-            "MauticPlugin\\LogokitBundle\\": ""
+            "MauticPlugin\\MauticLogokitBundle\\": ""
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "MauticPlugin\\LogokitBundle\\Tests\\": "Tests/"
+            "MauticPlugin\\MauticLogokitBundle\\Tests\\": "Tests/"
         }
     },
     "scripts": {

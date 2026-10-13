@@ -12,7 +12,7 @@ return [
         'main' => [
             'mautic_plugin_logokit_action' => [
                 'path'       => '/logokit/{objectAction}/{objectId}',
-                'controller' => 'MauticPlugin\LogokitBundle\Controller\LogokitController::executeAction',
+                'controller' => 'MauticPlugin\MauticLogokitBundle\Controller\LogokitController::executeAction',
                 'defaults'   => [
                     'objectId' => 0,
                 ],
@@ -21,7 +21,7 @@ return [
         'public' => [
             'mautic_plugin_logokit_public' => [
                 'path'       => '/logokit/public/{objectAction}',
-                'controller' => 'MauticPlugin\LogokitBundle\Controller\PublicController::executeAction',
+                'controller' => 'MauticPlugin\MauticLogokitBundle\Controller\PublicController::executeAction',
             ],
         ],
     ],
@@ -29,7 +29,7 @@ return [
     'services' => [
         'events' => [
             'mautic.plugin.logokit.button_subscriber' => [
-                'class'     => \MauticPlugin\LogokitBundle\EventListener\ButtonSubscriber::class,
+                'class'     => \MauticPlugin\MauticLogokitBundle\EventListener\ButtonSubscriber::class,
                 'arguments' => [
                     'mautic.helper.integration',
                     'translator',
@@ -37,7 +37,7 @@ return [
                 ],
             ],
             'mautic.plugin.logokit.lead_subscriber' => [
-                'class'     => \MauticPlugin\LogokitBundle\EventListener\LeadSubscriber::class,
+                'class'     => \MauticPlugin\MauticLogokitBundle\EventListener\LeadSubscriber::class,
                 'arguments' => [
                     'mautic.plugin.logokit.lookup_helper',
                 ],
@@ -45,13 +45,13 @@ return [
         ],
         'other' => [
             'mautic.plugin.logokit.client' => [
-                'class' => \MauticPlugin\LogokitBundle\Services\LogokitClient::class,
+                'class' => \MauticPlugin\MauticLogokitBundle\Services\LogokitClient::class,
             ],
             'mautic.plugin.logokit.importer' => [
-                'class' => \MauticPlugin\LogokitBundle\Services\ClearbitImporter::class,
+                'class' => \MauticPlugin\MauticLogokitBundle\Services\ClearbitImporter::class,
             ],
             'mautic.plugin.logokit.lookup_helper' => [
-                'class'     => \MauticPlugin\LogokitBundle\Helper\LookupHelper::class,
+                'class'     => \MauticPlugin\MauticLogokitBundle\Helper\LookupHelper::class,
                 'arguments' => [
                     'mautic.plugin.logokit.client',
                     'mautic.plugin.logokit.importer',
@@ -60,7 +60,7 @@ return [
         ],
         'integrations' => [
             'mautic.integration.logokit' => [
-                'class' => \MauticPlugin\LogokitBundle\Integration\LogokitIntegration::class,
+                'class' => \MauticPlugin\MauticLogokitBundle\Integration\LogokitIntegration::class,
                 'tags'  => [
                     'mautic.integration',
                     'mautic.basic_integration',

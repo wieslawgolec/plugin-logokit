@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MauticPlugin\LogokitBundle;
+namespace MauticPlugin\MauticLogokitBundle;
 
 use Mautic\PluginBundle\Bundle\PluginBundleBase;
 
