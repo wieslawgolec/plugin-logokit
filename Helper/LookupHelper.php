@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MauticPlugin\LogokitBundle\Helper;
+namespace MauticPlugin\MauticLogokitBundle\Helper;
 
-use MauticPlugin\LogokitBundle\Services\ClearbitImporter;
-use MauticPlugin\LogokitBundle\Services\LogokitClient;
+use MauticPlugin\MauticLogokitBundle\Services\ClearbitImporter;
+use MauticPlugin\MauticLogokitBundle\Services\LogokitClient;
 
 /**
  * Orchestrates enrichment lookups for contacts (via email domain) and companies.
@@ -20,10 +20,7 @@ class LookupHelper
     }
 
     /**
-     * Enrich a contact using the domain part of its email.
-     *
      * @param array{email?: string, company?: string, website?: string} $contactFields
-     *
      * @return array<string, mixed>|null
      */
     public function lookupContact(array $contactFields): ?array
@@ -39,7 +36,6 @@ class LookupHelper
         }
 
         if ($domain === '' && !empty($contactFields['company'])) {
-            // best-effort: treat company name as identifier (LogoKit accepts domain or ticker)
             $domain = strtolower(preg_replace('/[^a-z0-9.\-]/', '', (string) $contactFields['company']) ?? '');
         }
 
@@ -50,11 +46,7 @@ class LookupHelper
         return $this->lookupCompanyByDomain($domain);
     }
 
-    /**
-     * Enrich a company by domain or ticker.
-     *
-     * @return array<string, mixed>|null
-     */
+    /** @return array<string, mixed>|null */
     public function lookupCompanyByDomain(string $domainOrTicker): ?array
     {
         $brand = $this->client->getBrand($domainOrTicker);
@@ -64,7 +56,6 @@ class LookupHelper
 
         $mapped = $this->client->mapBrandToEnrichment($brand);
 
-        // Attach a ready-to-use logo URL if publishable token is configured
         if (empty($mapped['logo']) && !empty($mapped['domain'])) {
             $mapped['logo'] = $this->client->getLogoUrl((string) $mapped['domain']);
         }
@@ -72,13 +63,7 @@ class LookupHelper
         return $mapped;
     }
 
-    /**
-     * Import a previously stored Clearbit payload and return normalized data.
-     *
-     * @param array<string, mixed> $clearbitPayload
-     *
-     * @return array<string, mixed>
-     */
+    /** @param array<string, mixed> $clearbitPayload @return array<string, mixed> */
     public function importClearbitData(array $clearbitPayload): array
     {
         $type = $this->importer->detectType($clearbitPayload);
@@ -90,44 +75,32 @@ class LookupHelper
         };
     }
 
-    /**
-     * Build field updates that can be applied to a Mautic Lead / Company entity.
-     *
-     * @param array<string, mixed> $enrichment
-     *
-     * @return array<string, string|null>
-     */
+    /** @param array<string, mixed> $enrichment @return array<string, string|null> */
     public function toMauticCompanyFields(array $enrichment): array
     {
         $loc = is_array($enrichment['location'] ?? null) ? $enrichment['location'] : [];
         $geo = is_array($enrichment['geo'] ?? null) ? $enrichment['geo'] : [];
 
         return array_filter([
-            'companyname'    => $enrichment['name'] ?? null,
-            'companywebsite' => $enrichment['website'] ?? $enrichment['domain'] ?? null,
-            'companyemail'   => null,
-            'companyphone'   => null,
-            'companyaddress1'=> $loc['streetAddress'] ?? null,
-            'companycity'    => $loc['city'] ?? $geo['city'] ?? null,
-            'companystate'   => $loc['state'] ?? $geo['state'] ?? null,
-            'companyzipcode' => $loc['postalCode'] ?? null,
-            'companycountry' => $loc['country'] ?? $geo['country'] ?? null,
+            'companyname'        => $enrichment['name'] ?? null,
+            'companywebsite'     => $enrichment['website'] ?? $enrichment['domain'] ?? null,
+            'companyemail'       => null,
+            'companyphone'       => null,
+            'companyaddress1'    => $loc['streetAddress'] ?? null,
+            'companycity'        => $loc['city'] ?? $geo['city'] ?? null,
+            'companystate'       => $loc['state'] ?? $geo['state'] ?? null,
+            'companyzipcode'     => $loc['postalCode'] ?? null,
+            'companycountry'     => $loc['country'] ?? $geo['country'] ?? null,
             'companydescription' => $enrichment['description'] ?? null,
-            'companyindustry'=> $enrichment['industry'] ?? $enrichment['sector'] ?? null,
+            'companyindustry'    => $enrichment['industry'] ?? $enrichment['sector'] ?? null,
         ], static fn ($v) => $v !== null && $v !== '');
     }
 
-    /**
-     * @param array<string, mixed> $enrichment
-     *
-     * @return array<string, string|null>
-     */
+    /** @param array<string, mixed> $enrichment @return array<string, string|null> */
     public function toMauticContactFields(array $enrichment): array
     {
-        // Contact enrichment is primarily company context from domain
         $fields = $this->toMauticCompanyFields($enrichment);
 
-        // Also surface social if present
         if (!empty($enrichment['twitter'])) {
             $fields['twitter'] = $this->extractHandle((string) $enrichment['twitter']);
         }
