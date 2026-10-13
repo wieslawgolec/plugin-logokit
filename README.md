@@ -87,18 +87,20 @@ Then configure the integration under **Settings → Plugins → LogoKit**:
 ```text
 LogokitBundle/
 ├── Config/config.php
+├── Controller/                    # Lookup modals (batch & single)
 ├── EventListener/
-│   ├── ButtonSubscriber.php
-│   └── LeadSubscriber.php
+│   ├── ButtonSubscriber.php       # Injects UI buttons
+│   └── LeadSubscriber.php         # Optional auto-enrich
 ├── Form/Type/
 │   ├── LookupType.php
 │   └── BatchLookupType.php
-├── Helper/LookupHelper.php
+├── Helper/LookupHelper.php        # Orchestration + field mapping
 ├── Integration/LogokitIntegration.php
 ├── Services/
-│   ├── LogokitClient.php
-│   └── ClearbitImporter.php
+│   ├── LogokitClient.php          # HTTP client for Brand + Logo APIs
+│   └── ClearbitImporter.php       # Import / map legacy Clearbit JSON
 ├── Translations/en_US/messages.ini
+├── Views/
 └── Tests/Unit/...
 ```
 
@@ -137,6 +139,9 @@ $fields = $helper->toMauticCompanyFields($enrichment);
 `ClearbitImporter` understands typical Clearbit person and company response shapes and maps them into the same normalized structure used by LogoKit enrichment.  
 The original payload is preserved under `_clearbit` for audit / re-processing.
 
+Supported company paths include: `name`, `legalName`, `domain`, `url`, `description`, `logo`, `foundedYear`, `metrics.employees`, `category.industry|sector`, `geo.*`, social handles.  
+Supported person paths include: `name.givenName|familyName|fullName`, `email`, `employment.*`, `geo.*`, social handles.
+
 ---
 
 ## Testing
@@ -159,17 +164,30 @@ GitHub Actions workflow `.github/workflows/tests.yml`:
 - Triggers: `push`, `pull_request`, `workflow_dispatch`
 - Matrix: **PHP 8.2, 8.5, 8.6**
 - PHPUnit **^11.5**
+- Version constraints are **quoted** so the shell does not treat `^` or `|` as operators
 
 ### What the suite covers
 
 - Domain extraction from email / URL sanitisation
 - Logo CDN URL construction
-- Brand → enrichment mapping
+- Brand → enrichment mapping (name, geo, social, GICS, colours)
 - Clearbit company & person import + type detection
-- LookupHelper orchestration
-- Integration settings
-- ButtonSubscriber / LeadSubscriber
+- LookupHelper orchestration (contact / company / field mapping)
+- Integration settings (publish, tokens, form schema)
+- ButtonSubscriber (published vs disabled)
+- LeadSubscriber auto-enrich gate
 - Form type block prefixes & fields
+
+---
+
+## Changes vs original Clearbit plugin
+
+1. **Data provider** – LogoKit Brand API + Logo CDN instead of Clearbit.
+2. **Modern PHP** – strict types, PHP 8.1+, PHPUnit 11.5.
+3. **Clearbit import** – first-class support for migrating existing enrichment JSON.
+4. **Ticker / broader identifiers** – LogoKit accepts domains and stock tickers.
+5. **Standalone unit tests** – no full Mautic bootstrap required for CI.
+6. **CI matrix** – PHP 8.2 / 8.5 / 8.6 matching other wieslawgolec Mautic plugins.
 
 ---
 
