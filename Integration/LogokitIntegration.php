@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MauticPlugin\LogokitBundle\Integration;
+namespace MauticPlugin\MauticLogokitBundle\Integration;
 
 /**
  * Integration settings object (standalone-testable).
@@ -44,17 +44,13 @@ class LogokitIntegration
         return $this;
     }
 
-    /**
-     * @return array<string, string>
-     */
+    /** @return array<string, string> */
     public function getApiKeys(): array
     {
         return $this->apiKeys;
     }
 
-    /**
-     * @param array<string, string> $keys
-     */
+    /** @param array<string, string> $keys */
     public function setApiKeys(array $keys): self
     {
         $this->apiKeys = array_merge($this->apiKeys, $keys);
@@ -84,11 +80,7 @@ class LogokitIntegration
         return $this;
     }
 
-    /**
-     * Required form fields for the plugin settings UI.
-     *
-     * @return array<string, array<string, mixed>>
-     */
+    /** @return array<string, array<string, mixed>> */
     public function getFormSettings(): array
     {
         return [

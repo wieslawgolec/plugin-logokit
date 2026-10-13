@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MauticPlugin\LogokitBundle\EventListener;
+namespace MauticPlugin\MauticLogokitBundle\EventListener;
 
 /**
  * Injects "Lookup with LogoKit" buttons on Contact / Company list & detail views.
- * Standalone-testable; in Mautic it would implement EventSubscriberInterface.
  */
 class ButtonSubscriber
 {
@@ -17,9 +16,7 @@ class ButtonSubscriber
     ) {
     }
 
-    /**
-     * @return array<string, array{0: string, 1: int}>
-     */
+    /** @return array<string, array{0: string, 1: int}> */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -27,11 +24,7 @@ class ButtonSubscriber
         ];
     }
 
-    /**
-     * Build button config for a given route prefix (contact or company).
-     *
-     * @return array<string, mixed>|null
-     */
+    /** @return array<string, mixed>|null */
     public function buildLookupButton(string $routePrefix, bool $isBatch = false): ?array
     {
         if (!method_exists($this->integrationHelper, 'getIntegrationObject')) {
@@ -66,9 +59,7 @@ class ButtonSubscriber
         ];
     }
 
-    /**
-     * @return list<array<string, mixed>>
-     */
+    /** @return list<array<string, mixed>> */
     public function getAvailableButtons(string $route): array
     {
         $buttons = [];

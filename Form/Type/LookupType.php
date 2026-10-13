@@ -2,11 +2,8 @@
 
 declare(strict_types=1);
 
-namespace MauticPlugin\LogokitBundle\Form\Type;
+namespace MauticPlugin\MauticLogokitBundle\Form\Type;
 
-/**
- * Lightweight form definition for single lookup modal (standalone-testable).
- */
 class LookupType
 {
     public function getBlockPrefix(): string
@@ -14,9 +11,7 @@ class LookupType
         return 'logokit_lookup';
     }
 
-    /**
-     * @return array<string, array<string, mixed>>
-     */
+    /** @return array<string, array<string, mixed>> */
     public function getFields(): array
     {
         return [

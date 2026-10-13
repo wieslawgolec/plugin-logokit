@@ -2,11 +2,8 @@
 
 declare(strict_types=1);
 
-namespace MauticPlugin\LogokitBundle\Form\Type;
+namespace MauticPlugin\MauticLogokitBundle\Form\Type;
 
-/**
- * Lightweight form definition for batch lookup modal.
- */
 class BatchLookupType
 {
     public function getBlockPrefix(): string
@@ -14,9 +11,7 @@ class BatchLookupType
         return 'logokit_batch_lookup';
     }
 
-    /**
-     * @return array<string, array<string, mixed>>
-     */
+    /** @return array<string, array<string, mixed>> */
     public function getFields(): array
     {
         return [
