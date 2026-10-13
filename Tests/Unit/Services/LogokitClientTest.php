@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MauticPlugin\LogokitBundle\Tests\Unit\Services;
+namespace MauticPlugin\MauticLogokitBundle\Tests\Unit\Services;
 
-use MauticPlugin\LogokitBundle\Services\LogokitClient;
+use MauticPlugin\MauticLogokitBundle\Services\LogokitClient;
 use PHPUnit\Framework\TestCase;
 
 final class LogokitClientTest extends TestCase
@@ -82,7 +82,7 @@ final class LogokitClientTest extends TestCase
 
     public function testGetBrandReturnsNullWithoutToken(): void
     {
-        $client = new LogokitClient(''); // no token
+        $client = new LogokitClient('');
         $this->assertNull($client->getBrand('apple.com'));
     }
 
