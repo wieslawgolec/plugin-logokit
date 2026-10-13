@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MauticPlugin\LogokitBundle\Tests\Unit\Helper;
+namespace MauticPlugin\MauticLogokitBundle\Tests\Unit\Helper;
 
-use MauticPlugin\LogokitBundle\Helper\LookupHelper;
-use MauticPlugin\LogokitBundle\Services\ClearbitImporter;
+use MauticPlugin\MauticLogokitBundle\Helper\LookupHelper;
+use MauticPlugin\MauticLogokitBundle\Services\ClearbitImporter;
 use PHPUnit\Framework\TestCase;
 
 final class LookupHelperTest extends TestCase
