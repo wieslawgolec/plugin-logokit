@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MauticPlugin\LogokitBundle\Tests\Unit\Integration;
+namespace MauticPlugin\MauticLogokitBundle\Tests\Unit\Integration;
 
-use MauticPlugin\LogokitBundle\Integration\LogokitIntegration;
+use MauticPlugin\MauticLogokitBundle\Integration\LogokitIntegration;
 use PHPUnit\Framework\TestCase;
 
 final class LogokitIntegrationTest extends TestCase

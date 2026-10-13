@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MauticPlugin\LogokitBundle\Tests\Unit\Form\Type;
+namespace MauticPlugin\MauticLogokitBundle\Tests\Unit\Form\Type;
 
-use MauticPlugin\LogokitBundle\Form\Type\BatchLookupType;
-use MauticPlugin\LogokitBundle\Form\Type\LookupType;
+use MauticPlugin\MauticLogokitBundle\Form\Type\BatchLookupType;
+use MauticPlugin\MauticLogokitBundle\Form\Type\LookupType;
 use PHPUnit\Framework\TestCase;
 
 final class FormTypeTest extends TestCase

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace MauticPlugin\LogokitBundle\Tests\Unit\Helper;
+namespace MauticPlugin\MauticLogokitBundle\Tests\Unit\Helper;
 
-use MauticPlugin\LogokitBundle\Services\LogokitClient;
+use MauticPlugin\MauticLogokitBundle\Services\LogokitClient;
 
 /**
  * Test double that returns canned brand data without HTTP.

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace MauticPlugin\LogokitBundle\Tests\Unit\EventListener;
+namespace MauticPlugin\MauticLogokitBundle\Tests\Unit\EventListener;
 
-use MauticPlugin\LogokitBundle\EventListener\LeadSubscriber;
-use MauticPlugin\LogokitBundle\Helper\LookupHelper;
-use MauticPlugin\LogokitBundle\Services\ClearbitImporter;
-use MauticPlugin\LogokitBundle\Tests\Unit\Helper\FakeLogokitClient;
+use MauticPlugin\MauticLogokitBundle\EventListener\LeadSubscriber;
+use MauticPlugin\MauticLogokitBundle\Helper\LookupHelper;
+use MauticPlugin\MauticLogokitBundle\Services\ClearbitImporter;
+use MauticPlugin\MauticLogokitBundle\Tests\Unit\Helper\FakeLogokitClient;
 use PHPUnit\Framework\TestCase;
 
 final class LeadSubscriberTest extends TestCase
