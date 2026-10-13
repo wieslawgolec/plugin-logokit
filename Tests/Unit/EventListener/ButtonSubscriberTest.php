@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace MauticPlugin\LogokitBundle\Tests\Unit\EventListener;
+namespace MauticPlugin\MauticLogokitBundle\Tests\Unit\EventListener;
 
-use MauticPlugin\LogokitBundle\EventListener\ButtonSubscriber;
-use MauticPlugin\LogokitBundle\Integration\LogokitIntegration;
+use MauticPlugin\MauticLogokitBundle\EventListener\ButtonSubscriber;
+use MauticPlugin\MauticLogokitBundle\Integration\LogokitIntegration;
 use PHPUnit\Framework\TestCase;
 
 final class ButtonSubscriberTest extends TestCase

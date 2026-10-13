@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace MauticPlugin\LogokitBundle\Tests\Unit\Controller;
+namespace MauticPlugin\MauticLogokitBundle\Tests\Unit\Controller;
 
-use MauticPlugin\LogokitBundle\Controller\LogokitController;
-use MauticPlugin\LogokitBundle\Controller\PublicController;
-use MauticPlugin\LogokitBundle\Helper\LookupHelper;
-use MauticPlugin\LogokitBundle\Services\ClearbitImporter;
-use MauticPlugin\LogokitBundle\Tests\Unit\Helper\FakeLogokitClient;
+use MauticPlugin\MauticLogokitBundle\Controller\LogokitController;
+use MauticPlugin\MauticLogokitBundle\Controller\PublicController;
+use MauticPlugin\MauticLogokitBundle\Helper\LookupHelper;
+use MauticPlugin\MauticLogokitBundle\Services\ClearbitImporter;
+use MauticPlugin\MauticLogokitBundle\Tests\Unit\Helper\FakeLogokitClient;
 use PHPUnit\Framework\TestCase;
 
 final class LogokitControllerTest extends TestCase
