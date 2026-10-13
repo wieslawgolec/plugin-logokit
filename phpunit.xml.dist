@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
+         bootstrap="Tests/bootstrap.php"
          colors="true"
          cacheDirectory=".phpunit.cache"
+         failOnRisky="true"
+         failOnWarning="true"
          displayDetailsOnTestsThatTriggerDeprecations="true"
          displayDetailsOnTestsThatTriggerErrors="true"
          displayDetailsOnTestsThatTriggerNotices="true"
          displayDetailsOnTestsThatTriggerWarnings="true">
     <testsuites>
-        <testsuite name="Logokit Bundle Test Suite">
-            <directory>Tests</directory>
+        <testsuite name="LogokitBundle">
+            <directory suffix="Test.php">Tests</directory>
         </testsuite>
     </testsuites>
+
     <source>
         <include>
-            <directory>.</directory>
+            <directory suffix=".php">Services</directory>
+            <directory suffix=".php">Helper</directory>
+            <directory suffix=".php">Integration</directory>
+            <directory suffix=".php">EventListener</directory>
+            <directory suffix=".php">Form</directory>
+            <directory suffix=".php">Controller</directory>
         </include>
-        <exclude>
-            <directory>Tests</directory>
-            <directory>vendor</directory>
-            <directory>Views</directory>
-            <directory>Assets</directory>
-            <directory>Translations</directory>
-        </exclude>
     </source>
 </phpunit>

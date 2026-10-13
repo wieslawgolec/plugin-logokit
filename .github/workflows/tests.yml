@@ -56,5 +56,11 @@ jobs:
           composer remove --no-update mautic/core-lib || true
           composer update --prefer-dist --no-progress --no-interaction --no-scripts
 
+      - name: Verify Tests directory
+        run: |
+          ls -la
+          ls -laR Tests || true
+          test -d Tests && echo "Tests directory exists" || (echo "Tests directory MISSING" && exit 1)
+
       - name: Run PHPUnit
-        run: vendor/bin/phpunit --colors=always
+        run: vendor/bin/phpunit --colors=always --configuration phpunit.xml.dist
